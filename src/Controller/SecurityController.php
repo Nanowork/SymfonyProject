@@ -32,6 +32,8 @@ class SecurityController
         ));
     }
 
+
+
     /**
      * @Route("/logout", name="security_logout")
      */
