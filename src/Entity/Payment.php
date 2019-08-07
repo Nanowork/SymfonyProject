@@ -13,6 +13,7 @@ class Payment
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="payment")
      */
     private $id;
 

@@ -84,13 +84,13 @@ class AppFixtures extends Fixture
             [
                 'Bloody Mouse',
                 null,
-                3799,
+                37,
                 "Accessories"
             ],
             [
                 'Bloody Mouse Pad',
                 null,
-                2499,
+                24,
                 "Accessories"
             ],
             [
