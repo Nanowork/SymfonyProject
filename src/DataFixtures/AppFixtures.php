@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Payment;
+use App\Entity\Shipment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -15,6 +16,7 @@ class AppFixtures extends Fixture
         $this->loadCategories($manager);
         $this->loadProducts($manager);
         $this->loadPayments($manager);
+        $this->loadShipments($manager);
     }
 
     private function loadProducts(ObjectManager $manager): void
@@ -136,6 +138,42 @@ class AppFixtures extends Fixture
             [
                 'Payment 3',
                 1.23
+            ]
+        ];
+    }
+
+    private function loadShipments(ObjectManager $manager): void
+    {
+        foreach ($this->getShipmentsData() as [$name, $price]) {
+            $shipment = new Shipment();
+            $shipment->setCreatedAt(new \DateTime('NOW'));
+            $shipment->setUpdatedAt(new \DateTime('NOW'));
+            $shipment->setName($name);
+            $shipment->setPrice($price);
+
+            $manager->persist($shipment);
+        }
+        $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    private function getShipmentsData(): array
+    {
+        return [
+            // $shipmentData = [$name, $price];
+            [
+                'Shipment 1',
+                12
+            ],
+            [
+                'Shipment 2',
+                18
+            ],
+            [
+                'Shipment 3',
+                8
             ]
         ];
     }
