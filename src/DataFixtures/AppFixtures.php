@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Payment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -13,6 +14,7 @@ class AppFixtures extends Fixture
     {
         $this->loadCategories($manager);
         $this->loadProducts($manager);
+        $this->loadPayments($manager);
     }
 
     private function loadProducts(ObjectManager $manager): void
@@ -78,13 +80,13 @@ class AppFixtures extends Fixture
                 "Accessories"
             ],
             [
-                'Apple MacBook Air',
+                'Bloody Mouse',
                 null,
                 3799,
                 "Accessories"
             ],
             [
-                'Dell Inspiron 5570',
+                'Bloody Mouse Pad',
                 null,
                 2499,
                 "Accessories"
@@ -99,6 +101,41 @@ class AppFixtures extends Fixture
                 null,
                 120,
                 "PS Games"
+            ]
+        ];
+    }
+    private function loadPayments(ObjectManager $manager): void
+    {
+        foreach ($this->getPaymentsData() as [$name, $price]) {
+            $payment = new Payment();
+            $payment->setCreatedAt(new \DateTime('NOW'));
+            $payment->setUpdatedAt(new \DateTime('NOW'));
+            $payment->setName($name);
+            $payment->setPrice($price);
+
+            $manager->persist($payment);
+        }
+        $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    private function getPaymentsData(): array
+    {
+        return [
+            // $paymentData = [$name, $price];
+            [
+                'Payment 1',
+                0
+            ],
+            [
+                'Payment 2',
+                5
+            ],
+            [
+                'Payment 3',
+                1.23
             ]
         ];
     }
