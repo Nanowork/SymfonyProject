@@ -3,10 +3,16 @@
 {% block title %}HomePage{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+                <h2>{{ 'List of Products'|trans }}</h2>
+
                 <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{ 'Product'|trans }}</th>
+                        <th>{{ 'Price'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     <tbody>
                     {% for product in products %}
                         <tr>
@@ -16,7 +22,4 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
 {% endblock %}
