@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment!{% endblock %}
+
+{% block body %}
+    <h2>List of Payment Types</h2>
+
+    <small class="d-block text-right mt-5">
+        <td>
+            <a href="{{ path('add_payment') }}" class="btn btn-primary">Add New</a>
+        </td>
+    </small>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Payment Type</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tbody>
+        {% for payment in payments %}
+            <tr>
+                <td>{{ payment.name }}</td>
+                <td>{{ payment.price|number_format(2, ',', ' ') }} $</td>
+                <td>
+                    <a class="btn btn-success" href="{{ path('edit_payment', {
+                        id: payment.id
+                    }) }}">Edit</a>
+                </td>
+                <td>
+                    <a href="{{ path('delete_payment', {id : payment.id}) }}" class="btn btn-danger delete-shipment"
+                       data-id="{
+                    {shipment.id}}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
