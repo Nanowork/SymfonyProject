@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shipment{% endblock %}
+
+{% block body %}
+    <h2>List of Shipment Types</h2>
+
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success" >
+            {{ message }}
+        </div>
+    {% endfor %}
+    <small class="d-block text-right mt-5">
+        <td>
+            <a href="{{ path('add_shipment') }}" class="btn btn-primary">Add New</a>
+        </td>
+    </small>
+
+    <table id="shipment" class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Shipment Type</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tbody>
+        {% for shipment in shipments %}
+            <tr>
+                <td>{{ shipment.name }}</td>
+                <td>{{ shipment.price|number_format(2, ',', ' ') }} $</td>
+                <td>
+                    <a class="btn btn-success" href="{{ path('edit_shipment', {
+                        id: shipment.id
+                    }) }}">Edit</a>
+                </td>
+                <td>
+                    <a href="{{ path('delete_shipment', {id : shipment.id}) }}" class="btn btn-danger delete-shipment"
+                       data-id="{
+                    {shipment.id}}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,72 +15,99 @@ class Order
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @ORM\ManyToOne(targetEntity="App\Entity\Payment", inversedBy="id")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Entity\Payment")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $payment;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @ORM\ManyToOne(targetEntity="App\Entity\Shipment", inversedBy="id")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Entity\Shipment")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $shipment;
 
     /**
      * @ORM\Column(type="datetime")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $updated_at;
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $itemsTotal;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $itemsPriceTotal;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $priceTotal;
+
+    /**
+     * ArrayCollection
+     */
+    private $orderItems;
+
+    public function __construct()
+    {
+        $this->orderItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPayment(): ?string
+    public function addOrderItem(?OrderItem $orderItem): void
+    {
+        $this->orderItems->add($orderItem);
+    }
+
+    public function removeItem(?OrderItem $orderItem): void
+    {
+        $this->orderItems->removeElement($orderItem);
+    }
+
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
+    }
+
+    public function getPayment(): ?Payment
     {
         return $this->payment;
     }
 
-    public function setPayment(string $payment): self
+    public function setPayment(?Payment $payment): self
     {
         $this->payment = $payment;
 
         return $this;
     }
 
-    public function getShipment(): ?string
+    public function getShipment(): ?Shipment
     {
         return $this->shipment;
     }
 
-    public function setShipment(string $shipment): self
+    public function setShipment(?Shipment $shipment): self
     {
         $this->shipment = $shipment;
 
