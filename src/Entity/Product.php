@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\ORM\Mapping as ORM;
 /**
- * @ORM\Entity(repositoryClass="ProductRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  */
 class Product
 {
@@ -13,7 +13,6 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="App\Entity\OrderItem", inversedBy="product")
      */
     private $id;
 
@@ -48,9 +47,28 @@ class Product
      */
     private $price;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="product")
+     * @ORM\JoinColumn()
+     */
+    private $user;
+//
+//    /**
+//     * @var Collection
+//     */
+//    private $orderItem;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
@@ -124,4 +142,26 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+//    public function getOrderItem(): Collection
+//    {
+//        return $this->orderItem;
+//    }
+
 }
