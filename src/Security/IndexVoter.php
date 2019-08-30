@@ -29,16 +29,14 @@ class IndexVoter extends Voter
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $authenticatedUser = $token->getUser();
-//         dump($authenticatedUser);
+
         if(!$authenticatedUser instanceof  User) {
             return false;
         }
 
         /** @var Product $product */
         $product = $subject;
-//        dump($product->getUser());
-//        dump($product->getUser()->getId());
-//       dd($product);
+
         if($attribute == 'add'){
             if($product->getUser()->getId() === $authenticatedUser->getId())
             {

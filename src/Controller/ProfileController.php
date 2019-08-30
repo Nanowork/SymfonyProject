@@ -7,18 +7,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class IndexController extends AbstractController
+class ProfileController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/profile", name="profile")
      * @param ProductRepository $productRepository
      * @return Response
      */
-    public function index(ProductRepository $productRepository): Response
+    public function profile(ProductRepository $productRepository): Response
     {
-        $products = $productRepository->findAll();
+        $user = $this->getUser();
+        $products = $productRepository->findByUser($user);
 
-        return $this->render('index/index.html.twig', [
+        return $this->render('profile/index.html.twig', [
             'products' => $products
         ]);
     }

@@ -4,7 +4,6 @@
 namespace App\Form;
 
 use App\Entity\Product;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -66,8 +65,6 @@ class CreateType extends AbstractType
     function onPreSetData(FormEvent $event) {
         $product = $event->getData();
         $form = $event->getForm();
-
-        // When you create a new person, the City is always empty
         $category = $product->getCategory() ? $product->getCategory() : null;
 
         $this->addElements($form, $category);

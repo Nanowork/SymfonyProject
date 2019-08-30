@@ -6,17 +6,42 @@ use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Payment;
 use App\Entity\Shipment;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+
+
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder =$encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $this->loadCategories($manager);
         $this->loadProducts($manager);
         $this->loadPayments($manager);
         $this->loadShipments($manager);
+
+        $user = new User();
+
+        $user->setPassword(
+            $this->encoder->encodePassword($user,'admin')
+        );
+
+        $user->setUsername('admin');
+        $user->setEmail('admin@gmail.com');
+        $user->setFullName('Admin');
+
+        $manager->persist($user);
+
+        $manager->flush();
     }
 
     private function loadProducts(ObjectManager $manager): void

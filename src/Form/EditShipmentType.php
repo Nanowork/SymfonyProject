@@ -19,17 +19,6 @@ class EditShipmentType extends AbstractType
         $builder->add('name', TextType::class)
             ->add('price', NumberType::class)
             ->add('Edit', SubmitType::class);
-
-//        $builder->add(
-//            'submit',
-//            SubmitType::class,
-//            [
-//                'label' => 'Edit',
-//                'attr' => [
-//                    'icon' => 'fa fa-cart-plus'
-//                ]
-//            ]
-//        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

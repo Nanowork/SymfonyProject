@@ -3,7 +3,7 @@
 
 namespace App\Form;
 
-use App\Entity\CartOrder;
+use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ClearCartType extends AbstractType
+class AddItemType extends AbstractType
 {
     private $urlGenerator;
 
@@ -20,12 +20,9 @@ class ClearCartType extends AbstractType
         $this->urlGenerator = $urlGenerator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAction($this->urlGenerator->generate('cart.clear'));
+        $builder->setAction($this->urlGenerator->generate('basket.addItem', ['id' => $builder->getData()->getId()]));
 
         $builder->add(
             'id',
@@ -36,7 +33,10 @@ class ClearCartType extends AbstractType
             'submit',
             SubmitType::class,
             [
-                'label' => 'Clear'
+                'label' => 'Add to Basket',
+                'attr' => [
+                    'icon' => 'fa fa-cart-plus'
+                ]
             ]
         );
     }
@@ -44,7 +44,7 @@ class ClearCartType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => CartOrder::class,
+            'data_class' => Product::class,
         ));
     }
 }

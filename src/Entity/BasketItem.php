@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BasketItemRepository")
  */
-class OrderItem
+class BasketItem
 {
     /**
      * @ORM\Id()
@@ -17,10 +17,10 @@ class OrderItem
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CartOrder")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $order;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Product")
@@ -33,43 +33,35 @@ class OrderItem
      */
     private $quantity;
 
-    /**
-     * @ORM\Column(type="decimal", precision=5, scale=2)
-     */
-    private $price;
-
-    /**
-     * @ORM\Column(type="decimal", precision=5, scale=2)
-     */
-    private $sumPrice;
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOrder()
+    public function getUser()
     {
-        return $this->order;
+        return $this->user;
     }
 
-    public function setOrder($order): self
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
     {
-        $this->order = $order;
-
-        return $this;
+        $this->user = $user;
     }
 
-    public function getProduct(): ?Product
+    public function getProduct()
     {
         return $this->product;
     }
 
-    public function setProduct(?Product $product): self
+    /**
+     * @param mixed $product
+     */
+    public function setProduct($product): void
     {
         $this->product = $product;
-
-        return $this;
     }
 
     public function getQuantity(): ?int
@@ -96,14 +88,15 @@ class OrderItem
         return $this;
     }
 
-    public function getSumPrice()
+    public function getPriceAll()
     {
-        return $this->sumPrice;
+        return $this->priceAll;
     }
 
-    public function setSumPrice($sumPrice): void
+    public function setPriceAll($priceAll): self
     {
-        $this->sumPrice = $sumPrice;
-    }
+        $this->priceAll = $priceAll;
 
+        return $this;
+    }
 }

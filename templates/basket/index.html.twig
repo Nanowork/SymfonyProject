@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BasketController!{% endblock %}
+
+{% block body %}
+    <h2>Products in Basket</h2>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Sum. Price</th>
+            <th>Оptions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tbody>
+        {% for basketItem in basketItems %}
+            <tr>
+                <td>{{ basketItem.name }}</td>
+                <td>{{ basketItem.price|number_format(2, ',', ' ') }} $</td>
+                <td>{{ basketItem.quantity}}</td>
+                <td>{{ basketItem.sum_price|number_format(2, ',', ' ') }} $</td>
+                <td>
+                        <a href="{{ path('remove_basket_item', {id : basketItem.id}) }}" class="btn btn-danger delete-basketItem"
+                           data-id="{{basketItem.id}}">Remove</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div>{{ total|number_format(2, ',', ' ') }} $</div>
+    <div>
+        {{ render(controller('App\\Controller\\OrderController::createOrderForm')) }}
+    </div>
+{% endblock %}

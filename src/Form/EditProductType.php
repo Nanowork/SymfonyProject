@@ -64,7 +64,6 @@ class EditProductType extends  AbstractType
         $product = $event->getData();
         $form = $event->getForm();
 
-        // When you create a new person, the City is always empty
         $category = $product->getCategory() ? $product->getCategory() : null;
 
         $this->addElements($form, $category);

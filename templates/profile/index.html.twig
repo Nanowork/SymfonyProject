@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <h2>{{ app.user.fullName }}'s Profile</h2>
+    <a href="#" class="btn btn-primary">Add Billing Address</a>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Billing Adress</th>
+            <th>Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Test Adress</td>
+            <td>
+                <a class="btn btn-success" href="#">Edit</a>
+                <a class="btn btn-danger" href="#">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Оptions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price|number_format(2, ',', ' ') }} $</td>
+                <td>
+                    {% if is_granted('edit', product) %}
+                        <a class="btn btn-success" href="{{ path('edit_product', {
+                            id: product.id
+                        }) }}">Edit</a>
+                    {% endif %}
+                    {% if is_granted('delete', product) %}
+                        <a href="{{ path('delete_product', {id : product.id}) }}" class="btn btn-danger delete-shipment"
+                           data-id="{
+                    {product.id}}">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

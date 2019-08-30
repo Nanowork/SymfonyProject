@@ -3,7 +3,8 @@
 
 namespace App\Form;
 
-use App\Entity\CartOrder;
+
+use App\Entity\OrderItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -11,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ClearCartType extends AbstractType
+class RemoveItemType extends AbstractType
 {
     private $urlGenerator;
 
@@ -25,7 +26,7 @@ class ClearCartType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAction($this->urlGenerator->generate('cart.clear'));
+        $builder->setAction($this->urlGenerator->generate('cart.removeItem', ['id' => $builder->getData()->getId()]));
 
         $builder->add(
             'id',
@@ -36,7 +37,10 @@ class ClearCartType extends AbstractType
             'submit',
             SubmitType::class,
             [
-                'label' => 'Clear'
+                'label' => 'app.cart.removeItem.button',
+                'attr' => [
+                    'icon' => 'fa fa-minus-circle',
+                ]
             ]
         );
     }
@@ -44,7 +48,7 @@ class ClearCartType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => CartOrder::class,
+            'data_class' => OrderItem::class,
         ));
     }
 }

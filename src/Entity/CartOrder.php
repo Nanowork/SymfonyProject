@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  */
-class Order
+class CartOrder
 {
     /**
      * @ORM\Id()
@@ -19,157 +17,94 @@ class Order
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Payment")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $payment;
+    private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Shipment")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(type="decimal", precision=5, scale=2)
+     */
+    private $totalPrice;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Shipment")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $shipment;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Payment")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $created_at;
+    private $payment;
 
     /**
      * @ORM\Column(type="datetime")
-     * @ORM\JoinColumn(nullable=true)
      */
-    private $updated_at;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $itemsTotal;
-
-    /**
-     * @ORM\Column(type="decimal", precision=5, scale=2)
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $itemsPriceTotal;
-
-    /**
-     * @ORM\Column(type="decimal", precision=5, scale=2)
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $priceTotal;
-
-    /**
-     * ArrayCollection
-     */
-    private $orderItems;
-
-    public function __construct()
-    {
-        $this->orderItems = new ArrayCollection();
-    }
+    private $createdOn;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function addOrderItem(?OrderItem $orderItem): void
+    public function getUser()
     {
-        $this->orderItems->add($orderItem);
+        return $this->user;
     }
 
-    public function removeItem(?OrderItem $orderItem): void
+    public function setUser($user): void
     {
-        $this->orderItems->removeElement($orderItem);
+        $this->user = $user;
     }
 
-    public function getOrderItems(): Collection
+    public function getTotalPrice()
     {
-        return $this->orderItems;
+        return $this->totalPrice;
     }
 
-    public function getPayment(): ?Payment
+    public function setTotalPrice($totalPrice): self
     {
-        return $this->payment;
-    }
-
-    public function setPayment(?Payment $payment): self
-    {
-        $this->payment = $payment;
+        $this->totalPrice = $totalPrice;
 
         return $this;
     }
 
-    public function getShipment(): ?Shipment
+    public function getShipment()
     {
         return $this->shipment;
     }
 
-    public function setShipment(?Shipment $shipment): self
+    /**
+     * @param $shipment
+     */
+    public function setShipment($shipment): void
     {
         $this->shipment = $shipment;
-
-        return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getPayment()
     {
-        return $this->created_at;
+        return $this->payment;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    /**
+     * @param $payment
+     */
+    public function setPayment($payment): void
     {
-        $this->created_at = $created_at;
-
-        return $this;
+        $this->payment = $payment;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getCreatedOn(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->createdOn;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    public function setCreatedOn(\DateTimeInterface $createdOn): self
     {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getItemsTotal(): ?int
-    {
-        return $this->itemsTotal;
-    }
-
-    public function setItemsTotal(int $itemsTotal): self
-    {
-        $this->itemsTotal = $itemsTotal;
-
-        return $this;
-    }
-
-    public function getItemsPriceTotal()
-    {
-        return $this->itemsPriceTotal;
-    }
-
-    public function setItemsPriceTotal($itemsPriceTotal): self
-    {
-        $this->itemsPriceTotal = $itemsPriceTotal;
-
-        return $this;
-    }
-
-    public function getPriceTotal()
-    {
-        return $this->priceTotal;
-    }
-
-    public function setPriceTotal($priceTotal): self
-    {
-        $this->priceTotal = $priceTotal;
+        $this->createdOn = $createdOn;
 
         return $this;
     }

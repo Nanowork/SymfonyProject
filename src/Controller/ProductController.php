@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Entity\User;
 use App\Form\CreateType;
 use App\Form\EditProductType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,15 +11,19 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Shipment\Service as ShipmentService;
 
 class ProductController extends AbstractController
 {
-
-
     /**
      * @var EntityManagerInterface
      */
     private $entityManager;
+
+    /**
+     * @var ShipmentService
+     */
+    private $shipmentService;
 
     public function __construct(
         EntityManagerInterface $entityManager
@@ -110,9 +113,7 @@ class ProductController extends AbstractController
      */
     public function deleteProduct($id)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $product = $entityManager->getRepository(Product::class)->find($id);
+        $product = $this->entityManager->getRepository(Product::class)->find($id);
 
         if (!$product) {
             throw $this->createNotFoundException(
@@ -120,8 +121,8 @@ class ProductController extends AbstractController
             );
         }
 
-        $entityManager->remove($product);
-        $entityManager->flush();
+        $this->entityManager->remove($product);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('index');
 

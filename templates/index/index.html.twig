@@ -3,13 +3,14 @@
 {% block title %}HomePage{% endblock %}
 
 {% block body %}
-                <h2>{{ 'List of Products'|trans }}</h2>
+                <h2>List of Products</h2>
 
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>{{ 'Product'|trans }}</th>
-                        <th>{{ 'Price'|trans }}</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Options</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -17,7 +18,22 @@
                     {% for product in products %}
                         <tr>
                             <td>{{ product.name }}</td>
-                            <td>{{ product.price|number_format(2, ',', ' ') }}</td>
+                            <td>{{ product.price|number_format(2, ',', ' ') }} $</td>
+                            <td>
+                            {% if is_granted('add', product) %}
+                                {{ render(controller('App\\Controller\\BasketController::addItemForm', {'product' : product})) }}
+                            {% endif %}
+                            {% if is_granted('edit', product) %}
+                                <a class="btn btn-success" href="{{ path('edit_product', {
+                                    id: product.id
+                                }) }}">Edit</a>
+                            {% endif %}
+                            {% if is_granted('delete', product) %}
+                                    <a href="{{ path('delete_product', {id : product.id}) }}" class="btn btn-danger delete-shipment"
+                                       data-id="{
+                    {product.id}}">Delete</a>
+                            {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

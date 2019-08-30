@@ -13,7 +13,6 @@ class Shipment
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="shipment")
      */
     private $id;
 

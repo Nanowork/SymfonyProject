@@ -32,6 +32,14 @@ class SecurityController
         ));
     }
 
+    /**
+     * @Route("/admin", name="admin_action")
+     */
+    public function adminAction()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
+    }
+
 
 
     /**

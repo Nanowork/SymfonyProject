@@ -48,15 +48,10 @@ class Product
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="product")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="products")
      * @ORM\JoinColumn()
      */
     private $user;
-//
-//    /**
-//     * @var Collection
-//     */
-//    private $orderItem;
 
     public function getId(): ?int
     {
@@ -158,10 +153,4 @@ class Product
     {
         $this->user = $user;
     }
-
-//    public function getOrderItem(): Collection
-//    {
-//        return $this->orderItem;
-//    }
-
 }
