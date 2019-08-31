@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\CartOrder;
 use App\Entity\OrderItem;
 use App\Form\CreateOrderType;
+use App\Repository\OrderItemRepository;
+use App\Repository\OrderRepository;
 use App\Service\Shipment\Service as ShipmentService;
 use App\Service\Payment\Service as PaymentService;
 use App\Service\Basket\Service as BasketService;
@@ -36,25 +38,61 @@ class OrderController extends AbstractController
      */
     private $paymentService;
 
+    /**
+     * @var OrderRepository
+     */
+    private $orderRepository;
+
+    /**
+     * @var OrderItemRepository
+     */
+    private $orderItemRepository;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         ShipmentService $shipmentService,
         PaymentService $paymentService,
-        BasketService $basketService
+        BasketService $basketService,
+        OrderRepository $orderRepository,
+        OrderItemRepository $orderItemRepository
     ){
         $this->entityManager = $entityManager;
         $this->shipmentService = $shipmentService;
         $this->paymentService = $paymentService;
         $this->basketService = $basketService;
+        $this->orderRepository = $orderRepository;
+        $this->orderItemRepository = $orderItemRepository;
     }
 
-//    /**
-//     * @Route("/order/details", name="order")
-//     */
-//    public function details()
-//    {
-// //get All OrderItems for this Order
-//    }
+    /**
+     * @Route("/orders", name="orders")
+     * @param OrderRepository $orderRepository
+     * @return Response
+     */
+    public function orders(OrderRepository $orderRepository): Response
+    {
+        $user = $this->getUser();
+        $orders = $orderRepository->findByUser($user);
+
+        return $this->render('profile/order.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
+    /**
+     * @Route("/details", name="details")
+     * @param OrderItemRepository $orderItemRepository
+     * @return Response
+     */
+    public function orderDetails(OrderItemRepository $orderItemRepository): Response
+    {
+        $orderId = $this->getOrder();
+        $orderItems = $orderItemRepository->findById($orderId);
+
+        return $this->render('order/orderDetails.html.twig', [
+            'orderItems' => $orderItems
+        ]);
+    }
 
     public function createOrderForm(): Response
     {

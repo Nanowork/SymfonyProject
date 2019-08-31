@@ -4,24 +4,25 @@
 
 {% block body %}
     <h2>{{ app.user.fullName }}'s Profile</h2>
-    <a href="#" class="btn btn-primary">Add Billing Address</a>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Billing Adress</th>
-            <th>Options</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Test Adress</td>
-            <td>
-                <a class="btn btn-success" href="#">Edit</a>
-                <a class="btn btn-danger" href="#">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <a href="{{ path('profile') }}" class="btn btn-primary">Products</a>
+    <a href="{{ path('orders') }}" class="btn btn-primary">Orders</a>
+{#    <table class="table table-bordered">#}
+{#        <thead>#}
+{#        <tr>#}
+{#            <th>Billing Adress</th>#}
+{#            <th>Options</th>#}
+{#        </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        <tr>#}
+{#            <td>Test Adress</td>#}
+{#            <td>#}
+{#                <a class="btn btn-success" href="#">Edit</a>#}
+{#                <a class="btn btn-danger" href="#">Delete</a>#}
+{#            </td>#}
+{#        </tr>#}
+{#        </tbody>#}
+{#    </table>#}
     <table class="table table-bordered">
         <thead>
         <tr>

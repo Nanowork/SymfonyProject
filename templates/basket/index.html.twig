@@ -29,9 +29,9 @@
                 </td>
             </tr>
         {% endfor %}
+
         </tbody>
     </table>
-    <div>{{ total|number_format(2, ',', ' ') }} $</div>
     <div>
         {{ render(controller('App\\Controller\\OrderController::createOrderForm')) }}
     </div>

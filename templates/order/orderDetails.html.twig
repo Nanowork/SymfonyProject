@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <h2>Order Information</h2>
+    <a href="{{ path('orders') }}" class="btn btn-primary">Orders</a>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Sum. Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for orderItem in orderItems %}
+            <tr>
+                <td>{{ orderItem.product.name }}</td>
+                <td>{{ orderItem.quantity }}</td>
+                <td>{{ orderItem.price }} $</td>
+                <td>{{ orderItem.sumPrice }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

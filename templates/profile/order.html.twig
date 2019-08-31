@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <h2>{{ app.user.fullName }}'s Orders</h2>
+    <a href="{{ path('profile') }}" class="btn btn-primary">Products</a>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Shipment Type</th>
+            <th>Payment Type</th>
+            <th>Price</th>
+            <th>Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.shipment.name }}</td>
+                <td>{{ order.payment.name }} $</td>
+                <td>{{ order.totalPrice }}</td>
+                <td><a href="{{ path('details') }}" class="btn btn-dark">Details</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

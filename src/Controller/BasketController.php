@@ -110,7 +110,7 @@ class BasketController extends AbstractController
                 $this->entityManager->persist($basketItem);
                 $this->entityManager->flush();
             } else {
-                dd($alreadyInBasket);
+                dump($alreadyInBasket);
                 //TODO: show notification 'Already in basket'
                 //TODO: redirect to products list
             }

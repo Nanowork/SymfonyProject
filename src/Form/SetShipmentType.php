@@ -20,11 +20,6 @@ class SetShipmentType extends AbstractType
      */
     private $urlGenerator;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;

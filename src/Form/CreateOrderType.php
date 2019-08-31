@@ -29,7 +29,7 @@ class CreateOrderType extends AbstractType
             'submit',
             SubmitType::class,
             [
-                'label' => 'Checkouttttt',
+                'label' => 'Checkout',
                 'attr' => [
                     'icon' => 'fa fa-cart-plus'
                 ]
